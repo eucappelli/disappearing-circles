@@ -34,7 +34,7 @@ function createHud() {
     hud.className = "hud";
     const tutorial = createTutorial();
     const score = createScoreElement();
-    const button = createAddButton();
+    const button = createButtonsDiv();
     hud.appendChild(tutorial);
     hud.appendChild(score);
     hud.appendChild(button);
@@ -57,12 +57,59 @@ function createScoreElement() {
     return score;
 }
 
+function createButtonsDiv() {
+    const buttons = document.createElement("div");
+    buttons.id = "buttons-div";
+    buttons.className = "buttons-div";
+    const addButton = createAddButton();
+    const removeButton = createRemoveButton();
+    const showAllButton = createShowAllButton();
+    buttons.appendChild(addButton);
+    buttons.appendChild(removeButton);
+    buttons.appendChild(showAllButton);
+    document.body.appendChild(buttons);
+    return buttons;
+}
+
 function createAddButton() {
     const button = document.createElement("button");
     button.id = "add-circle-button";
     button.innerHTML = "Adicionar círculo";
+    button.className = "button";
     button.onclick = function () {
         createRedCircle();
+    };
+    return button;
+}
+
+function createRemoveButton() {
+    const button = document.createElement("button");
+    button.id = "remove-circles-button";
+    button.innerHTML = "Remover todos círculos";
+    button.className = "button";
+    button.onclick = function () {
+        var children = document.getElementById("circle-parent").childNodes;
+        children.forEach((child) => {
+            invisibleBalls = balls;
+            child.style.display = "none";
+            document.getElementById("score").innerHTML = setScore();
+        });
+    };
+    return button;
+}
+
+function createShowAllButton() {
+    const button = document.createElement("button");
+    button.id = "show-circles-button";
+    button.innerHTML = "Mostrar todos círculos";
+    button.className = "button";
+    button.onclick = function () {
+        var children = document.getElementById("circle-parent").childNodes;
+        children.forEach((child) => {
+            child.style.display = "block";
+            invisibleBalls = 0;
+            document.getElementById("score").innerHTML = setScore();
+        });
     };
     return button;
 }
